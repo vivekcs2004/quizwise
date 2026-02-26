@@ -1,0 +1,106 @@
+POST http://127.0.0.1:8000/register/ 
+Content-Type: application/json
+
+{
+    "username":"django",
+    "email":"django@gmail.com",
+    "password":"password@123",
+    "phone":"1234567831"
+}
+
+#token generation
+###
+POST http://127.0.0.1:8000/token/ 
+Content-Type: application/json
+
+{
+    "username":"django",
+    "password":"password@123"
+}
+
+
+#add language
+###
+POST http://127.0.0.1:8000/language/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{
+    "language_name":"javascript"
+
+}
+
+#quiz create
+###
+POST http://127.0.0.1:8000/quiz/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{
+  "title": "JavaScript ES6 Features",
+  "language": 5,
+  "level": "easy"
+}
+
+#quiz list
+###
+GET  http://127.0.0.1:8000/quiz/
+Accept: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+#quiz retrieve
+###
+GET  http://127.0.0.1:8000/quiz/1/
+Accept: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+
+#quiz delete
+###
+DELETE  http://127.0.0.1:8000/quiz/5/remove/
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+
+#create question
+###
+POST http://127.0.0.1:8000/quiz/1/add-question/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{
+  "text": "Which keyword is used to define a function in Python?"
+}
+
+#add choice
+###
+POST http://127.0.0.1:8000/question/2/add-choice/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{ "option": "define", "is_correct": false }
+
+
+#quiz attempt
+###
+POST http://127.0.0.1:8000/quiz/2/start/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{
+    
+}
+
+#answer
+###
+POST http://127.0.0.1:8000/attempt/1/answer/
+Content-Type: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
+
+{
+    "question": 1,
+    "selected_choice": 1
+}
+
+
+
+
