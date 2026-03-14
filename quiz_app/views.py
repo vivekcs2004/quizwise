@@ -15,6 +15,8 @@ from rest_framework.generics import (
     RetrieveAPIView,
     DestroyAPIView
 )
+from  rest_framework.response import Response
+from rest_framework.views import APIView
 
 from rest_framework import authentication, permissions, serializers
 
@@ -143,7 +145,7 @@ class AnswerCreateView(CreateAPIView):
         question_object = serializer.validated_data.get("question")
         choice_object = serializer.validated_data.get("selected_choice")
 
-        #  choice must belong to question
+        
         if choice_object.question != question_object:
 
             raise serializers.ValidationError("invalid choice for question")
@@ -151,10 +153,30 @@ class AnswerCreateView(CreateAPIView):
         serializer.save(attempt=attempt_instance)
 
 
-class QuizResultCreateView(CreateAPIView):
+class QuizResultCreateView(APIView):
 
     serializer_class = QuizResultSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    
+    def get(self, request, pk):
+
+        
+        attempt = QuizAttempt.objects.get(id=pk)
+
+        
+        if attempt.user != request.user:
+            return Response({"user does not match"})
+
+        
+        correct_count = attempt.answers.filter(selected_choice__is_correct=True).count()
+
+        
+        total_questions = attempt.quiz.questions.count()
+
+        return Response({"attempt_id": attempt.id,
+            "score": correct_count,
+            "total_questions": total_questions,
+            "owner": request.user.username,        
+            "quiz_title": attempt.quiz.title       
+        })

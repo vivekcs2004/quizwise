@@ -135,8 +135,15 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class QuizResultSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField()
+    quiz_title = serializers.SerializerMethodField()
     class Meta:
         model = QuizResult
-        fields = ["id", "attempt", "score", "total_questions"]
-        read_only_fields = ["id"]
+        fields = ["id", "attempt", "score", "total_questions",'owner','quiz_title']
+        read_only_fields = ["id", "owner", "quiz_title"]
 
+    def get_owner(self, obj):
+        return obj.attempt.user.username
+
+    def get_quiz_title(self, obj):
+        return obj.attempt.quiz.title

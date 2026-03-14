@@ -101,6 +101,10 @@ Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
     "selected_choice": 1
 }
 
-
+#result
+###
+GET http://127.0.0.1:8000/result/1/
+Accept: application/json
+Authorization: Token 10e1753eb90e9ad946437bba60e95c067808c238
 
 

@@ -28,7 +28,8 @@ from quiz_app.views import (
     ChoiceCreateView,
     QuizAttemptCreateView,
     AnswerCreateView,
-    LanguageCreateView
+    LanguageCreateView,
+    QuizResultCreateView
 )
 
 urlpatterns = [
@@ -43,4 +44,5 @@ urlpatterns = [
     path('question/<int:pk>/add-choice/', ChoiceCreateView.as_view()),
     path('quiz/<int:pk>/start/', QuizAttemptCreateView.as_view()),
     path('attempt/<int:pk>/answer/', AnswerCreateView.as_view()),
+    path('result/<int:pk>/',QuizResultCreateView.as_view()),
 ]
